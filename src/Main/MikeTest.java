@@ -17,6 +17,7 @@ public class MikeTest {
     public static void main(String[] args) {
 
         try {
+            //Mike Add Message
             ValidEmailFormat Valid = new ValidEmailFormat();
             System.out.println(Valid.Test());
         } catch (Exception e) {
