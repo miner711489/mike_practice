@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package Main;
 
 /**
@@ -18,9 +13,10 @@ public class MikeTest {
 
         try {
             //Mike Add Message
-            //ertyuio
             ValidEmailFormat Valid = new ValidEmailFormat();
             System.out.println(Valid.Test());
+
+            System.out.println(Valid.Test() + "，123");
         } catch (Exception e) {
             System.out.println("Error Message:" + e.getMessage());
         }
