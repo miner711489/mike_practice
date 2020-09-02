@@ -7,6 +7,7 @@ package Main;
 
 import java.io.ByteArrayInputStream;
 import java.io.IOException;
+import java.util.List;
 import org.dom4j.DocumentException;
 import org.dom4j.io.SAXReader;
 import org.xml.sax.EntityResolver;
@@ -60,6 +61,64 @@ public class XmlTool {
         }
         return d4j;
     }
+
+    public static org.dom4j.Document changeDIDom(org.dom4j.Document didom, String diRootName) throws Exception {
+        //<editor-fold defaultstate="collapsed" desc="範本令的部份增加判斷">
+        if (diRootName.contains("獎懲令") || diRootName.contains("派免令") || diRootName.contains("派免兼令")) {
+            //尋找段落/文字無值Tag 並移除
+            List<org.dom4j.Node> mNodes = didom.getRootElement().selectNodes("//令/段落");
+            for (org.dom4j.Node s : mNodes) {
+                if (((org.dom4j.Element) s).attributeCount() == 0 && s.getText().equals("") && s.selectSingleNode("//段落/條列") == null) {
+                    s.detach();
+                }
+            }
+
+            //產生新的段落
+            org.dom4j.Document nDocument = org.dom4j.DocumentHelper.createDocument();
+            org.dom4j.Element nRoot = nDocument.addElement("段落");
+            nRoot.addAttribute("段名", "主旨：");
+            org.dom4j.Element aElement1 = nRoot.addElement("文字"); //放主旨
+
+            //確認是否有主旨/文字
+            if (didom.getRootElement().selectSingleNode("//主旨/文字") != null) {
+                aElement1.setText(didom.getRootElement().selectSingleNode("//主旨/文字").getText());
+            }
+
+            //確認是否有條列 序號=""
+            if (didom.getRootElement().selectSingleNode("//條列[@序號='']") == null) {
+                org.dom4j.Element aElement2 = nRoot.addElement("條列"); // 條列序號 放段落/文字
+                aElement2.addAttribute("序號", "");
+                org.dom4j.Element aElement3 = aElement2.addElement("文字");
+                if (didom.getRootElement().selectSingleNode("//段落/文字") != null) {
+                    //aElement3.setText(didom.getRootElement().selectSingleNode("//段落/文字").getText());
+                    String tagAttrNam = null;
+                    if (didom.getRootElement().selectSingleNode("//段落/文字").getParent().attributeCount() > 0) {
+                        tagAttrNam = didom.getRootElement().selectSingleNode("//段落/文字").getParent().attribute("段名").getText();
+                    }
+                    if (tagAttrNam == null || tagAttrNam.equals("")) {
+                        aElement3.setText(didom.getRootElement().selectSingleNode("//段落/文字").getText());
+                    }
+                }
+            }
+
+            //搬
+            List<org.dom4j.Node> sElement = didom.getRootElement().selectNodes("//段落/條列");
+            for (org.dom4j.Node s : sElement) {
+                if (s.getParent().attributeValue("段名") == null || s.getParent().attributeValue("段名") == "" || s.getParent().attributeValue("段名").equals("主旨：")) {
+                    nRoot.add(((org.dom4j.Element) s).createCopy());
+                }
+            }
+            org.dom4j.Element oElement = (org.dom4j.Element) didom.getRootElement().selectSingleNode("//令/段落");
+            if (oElement != null) {
+                oElement.detach();
+            }
+            didom.getRootElement().add(nRoot); //取代原有的段落(主旨)
+        }
+
+        //</editor-fold>
+        return didom;
+    }
+
     /**
      * 取得指定的節點
      *
@@ -163,5 +222,4 @@ public class XmlTool {
 
         return retValue.trim();
     }
-
 }
