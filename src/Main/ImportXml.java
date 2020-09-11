@@ -52,20 +52,18 @@ public class ImportXml {
 
             Element root = didom.getRootElement();
 
+            //取得各node的方法，要用遞迴實作
             for (Iterator it = root.elementIterator(); it.hasNext();) {
                 Element element_1 = (Element) it.next();
                 element_1.getQName().getName();
-
                 for (Iterator it_2 = element_1.elementIterator(); it_2.hasNext();) {
-
                     Element element_2 = (Element) it_2.next();
                     element_2.getQName().getName();
-
                 }
-
             }
 
             String DocDesc = "";
+            //取得Xml的Node，放到list
             List<Node> Nodes = didom.getRootElement().selectNodes("//案/案由/段落");
             for (Node node : Nodes) {
                 if (!node.selectSingleNode("文字").getText().isEmpty()) {
