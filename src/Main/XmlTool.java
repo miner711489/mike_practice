@@ -14,6 +14,7 @@ import org.xml.sax.EntityResolver;
 import org.xml.sax.InputSource;
 
 /**
+ * 解析XML檔練習
  *
  * @author Mike
  */

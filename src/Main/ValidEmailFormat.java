@@ -8,6 +8,7 @@ package Main;
 import java.util.regex.Pattern;
 
 /**
+ * Regular expression驗證Email格式
  *
  * @author Mike
  */
