@@ -25,9 +25,11 @@ public class MikeTest {
             String input = "D.RpsDepNam,D.RpsDivNam,D.RpsUserNam,Count(D.DocNO) DocNONum,sum(D.UseDays) UseDays";
             input = "Select *,convert(decimal(3,0),RANK() over(order by AvgUseDay Desc)) OrderSeqNO";
             input = "AvgUseDay";
-            LowerCase LC = new LowerCase();
-            System.out.println(LC.getLowerCase(input));
 
+            input = "SELECT D.RpsDepNam,D.RpsDivNam,D.RpsUserNam,Count(D.DocNO) DocNONum,sum(D.UseDays) UseDays From";
+            LowerCase LC = new LowerCase();
+            //System.out.println(LC.getLowerCase(input));
+            LC.bracket_matching_Impl();
         } catch (Exception e) {
             System.out.println("Error Message:" + e.getMessage());
         }
