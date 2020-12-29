@@ -28,8 +28,8 @@ public class MikeTest {
 
             input = "SELECT D.RpsDepNam,D.RpsDivNam,D.RpsUserNam,Count(D.DocNO) DocNONum,sum(D.UseDays) UseDays From";
             LowerCase LC = new LowerCase();
-            //System.out.println(LC.getLowerCase(input));
-            LC.bracket_matching_Impl();
+            System.out.println(LC.getLowerCase(input));
+            //LC.bracket_matching_Impl();
         } catch (Exception e) {
             System.out.println("Error Message:" + e.getMessage());
         }
