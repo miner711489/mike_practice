@@ -1,5 +1,6 @@
 package Main;
 
+import ODBBS.ODBBS;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
@@ -13,23 +14,12 @@ public class MikeTest {
     /**
      * @param args the command line arguments
      */
-    public static void main(String[] args) {
+    public static void main(String[] args) throws Exception {
 
         try {
-            //ValidEmailFormat Valid = new ValidEmailFormat();
-            //System.out.println(Valid.Test());
 
-            ImportXml importxml = new ImportXml();
-            //System.out.println(importxml.Import());
-
-            String input = "D.RpsDepNam,D.RpsDivNam,D.RpsUserNam,Count(D.DocNO) DocNONum,sum(D.UseDays) UseDays";
-            input = "Select *,convert(decimal(3,0),RANK() over(order by AvgUseDay Desc)) OrderSeqNO";
-            input = "AvgUseDay";
-
-            input = "SELECT D.RpsDepNam,D.RpsDivNam,D.RpsUserNam,Count(D.DocNO) DocNONum,sum(D.UseDays) UseDays From";
-            LowerCase LC = new LowerCase();
-            System.out.println(LC.getLowerCase(input));
-            //LC.bracket_matching_Impl();
+            ODBBS odbbs = new ODBBS();
+            odbbs.ODBBSMain();
         } catch (Exception e) {
             System.out.println("Error Message:" + e.getMessage());
         }
