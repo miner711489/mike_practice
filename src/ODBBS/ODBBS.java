@@ -43,7 +43,7 @@ public class ODBBS {
     private String senddate = "";
 
     public ODBBS() {
-        this.senddate = "20210222";
+        this.senddate = "20210701";
     }
 
     public ODBBS(String senddate) {

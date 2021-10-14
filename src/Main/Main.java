@@ -1,5 +1,7 @@
 package Main;
 
+import AbstractClass.*;
+import java.security.MessageDigest;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Collections;
@@ -21,7 +23,8 @@ public class Main {
             //DBConnectTest DBT = new DBConnectTest();
             //DBT.DBConnectTestMain();
 
-            SimpleDateFormatTest("");
+            CarMain carmain = new CarMain();
+            carmain.main();
 
         } catch (Exception e) {
             System.out.println("Error Message:" + e.getMessage());
@@ -53,7 +56,7 @@ public class Main {
         System.out.println("unixTime:" + unixTime);
         SimpleDateFormat dateFormat = new SimpleDateFormat("yyy/MM/dd HH:mm:ss");
         String sndtime = "110/04/06 16:32:33";
-        //Date date = dateFormat.parse(sndtime);
+//Date date = dateFormat.parse(sndtime);
 
         Date date = new Date();
         String timeStamp = dateFormat.format(date);
@@ -66,6 +69,29 @@ public class Main {
         System.out.println("date 2:" + timeStamp);
 
         return "";
+    }
+
+    public static void MD5() throws Exception {
+        try {
+            MessageDigest md5 = MessageDigest.getInstance("md5");
+
+            String encode = "今天是7月12號，星期一。";
+
+            System.out.println("encode:" + encode);
+            System.out.println("encode.getBytes():" + encode.getBytes());
+            //MD5加密
+            byte[] cipherData = md5.digest(encode.getBytes());
+            StringBuilder builder = new StringBuilder();
+            for (byte cipher : cipherData) {
+                String toHexStr = Integer.toHexString(cipher & 0xff);
+                builder.append(toHexStr.length() == 1 ? "0" + toHexStr : toHexStr);
+            }
+            String decode = builder.toString();
+            System.out.println("decode:" + decode);
+
+        } catch (Exception e) {
+            throw e;
+        }
     }
 
 }
